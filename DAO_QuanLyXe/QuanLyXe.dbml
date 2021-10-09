@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLXE" Class="QuanLyXeDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-4N5CPOV;Initial Catalog=QLXE;Integrated Security=True" SettingsObjectName="DAO_QuanLyXe.Properties.Settings" SettingsPropertyName="QLXEConnectionString3" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CHITIETHD" Member="CHITIETHDs">
+    <Type Name="CHITIETHD">
+      <Column Name="MAHD" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MAXE" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="SOLUONG" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DONGIA" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="THANHTIEN" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Association Name="XE_CHITIETHD" Member="XE" ThisKey="MAXE" OtherKey="MAXE" Type="XE" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="HOADON_CHITIETHD" Member="HOADON" ThisKey="MAHD" OtherKey="MAHD" Type="HOADON" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.XE" Member="XEs">
+    <Type Name="XE">
+      <Column Name="MAXE" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENXE" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="MALOAIXE" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="MANCC" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="GHICHU" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="DONGIANHAP" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="DONGIABAN" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="PHANKHOI" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SOLUONGTON" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="XE_CHITIETHD" Member="CHITIETHDs" ThisKey="MAXE" OtherKey="MAXE" Type="CHITIETHD" />
+      <Association Name="LOAIXE_XE" Member="LOAIXE" ThisKey="MALOAIXE" OtherKey="MALOAIXE" Type="LOAIXE" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="NCC_XE" Member="NCC" ThisKey="MANCC" OtherKey="MANCC" Type="NCC" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.HOADON" Member="HOADONs">
+    <Type Name="HOADON">
+      <Column Name="MAHD" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NGAYLAPHD" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="MANV" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="MAKH" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="TONGTIEN" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="MALOAIHD" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Association Name="HOADON_CHITIETHD" Member="CHITIETHD" ThisKey="MAHD" OtherKey="MAHD" Type="CHITIETHD" Cardinality="One" />
+      <Association Name="KHACHHANG_HOADON" Member="KHACHHANG" ThisKey="MAKH" OtherKey="MAKH" Type="KHACHHANG" IsForeignKey="true" DeleteRule="CASCADE" />
+      <Association Name="LOAIHD_HOADON" Member="LOAIHD" ThisKey="MALOAIHD" OtherKey="MALOAIHD" Type="LOAIHD" IsForeignKey="true" />
+      <Association Name="NHANVIEN_HOADON" Member="NHANVIEN" ThisKey="MANV" OtherKey="MANV" Type="NHANVIEN" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KHACHHANG" Member="KHACHHANGs">
+    <Type Name="KHACHHANG">
+      <Column Name="MAKH" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENKH" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="NGAYSINH" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+      <Column Name="CMND" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="DIACHI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="KHACHHANG_HOADON" Member="HOADONs" ThisKey="MAKH" OtherKey="MAKH" Type="HOADON" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOAIHD" Member="LOAIHDs">
+    <Type Name="LOAIHD">
+      <Column Name="MALOAIHD" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENLOAIHD" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="LOAIHD_HOADON" Member="HOADONs" ThisKey="MALOAIHD" OtherKey="MALOAIHD" Type="HOADON" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOAIXE" Member="LOAIXEs">
+    <Type Name="LOAIXE">
+      <Column Name="MALOAIXE" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENLOAI" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="LOAIXE_XE" Member="XEs" ThisKey="MALOAIXE" OtherKey="MALOAIXE" Type="XE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NCC" Member="NCCs">
+    <Type Name="NCC">
+      <Column Name="MANCC" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENNCC" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="NCC_XE" Member="XEs" ThisKey="MANCC" OtherKey="MANCC" Type="XE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NHANVIEN" Member="NHANVIENs">
+    <Type Name="NHANVIEN">
+      <Column Name="MANV" Type="System.String" DbType="Char(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TENNV" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="NGAYSINH" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CMND" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="SDT" Type="System.String" DbType="VarChar(12)" CanBeNull="true" />
+      <Column Name="DIACHI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="GIOITINH" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="NHANVIEN_HOADON" Member="HOADONs" ThisKey="MANV" OtherKey="MANV" Type="HOADON" />
+    </Type>
+  </Table>
+</Database>
